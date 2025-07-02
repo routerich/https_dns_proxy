@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
-project(HttpsDnsProxy C)
+project(DoHProxy C)
 
 # FUNCTIONS
 
@@ -104,7 +104,7 @@ endif()
 # BUILD
 
 # The main binary
-set(TARGET_NAME "https_dns_proxy")
+set(TARGET_NAME "doh_proxy")
 aux_source_directory(src SRC_LIST)
 set(SRC_LIST ${SRC_LIST})
 add_executable(${TARGET_NAME} ${SRC_LIST})
@@ -112,7 +112,7 @@ set(LIBS ${LIBS} cares curl ev resolv)
 target_link_libraries(${TARGET_NAME} ${LIBS})
 set_property(TARGET ${TARGET_NAME} PROPERTY C_STANDARD 11)
 
-define_file_basename_for_sources("https_dns_proxy")
+define_file_basename_for_sources("doh_proxy")
 
 
 if(SW_VERSION)

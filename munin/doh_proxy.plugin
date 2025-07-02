@@ -3,8 +3,8 @@
 case $1 in
   config)
     cat <<'EOM'
-multigraph https_dns_proxy_count
-graph_title HTTPS DNS proxy - count
+multigraph doh_proxy_count
+graph_title DoH proxy - count
 graph_vlabel count
 graph_category network
 graph_scale no
@@ -12,16 +12,16 @@ graph_args --base 1000 --lower-limit 0
 requests.label Requests
 responses.label Responses
 
-multigraph https_dns_proxy_latency
-graph_title HTTPS DNS proxy - latency
+multigraph doh_proxy_latency
+graph_title DoH proxy - latency
 graph_vlabel latency
 graph_category network
 graph_scale no
 graph_args --base 1000 --lower-limit 0
 latency.label Latency
 
-multigraph https_dns_proxy_connections
-graph_title HTTPS DNS proxy - connections
+multigraph doh_proxy_connections
+graph_title DoH proxy - connections
 graph_vlabel count
 graph_category network
 graph_scale no
@@ -33,13 +33,13 @@ EOM
     exit 0;;
 
   autoconf)
-    pgrep https_dns_proxy >/dev/null 2>&1 \
+    pgrep doh_proxy >/dev/null 2>&1 \
       && echo "yes" \
       || echo "no"
     exit 0;;
 esac
 
-log_lines=$(journalctl --unit https_dns_proxy.service --output cat --since '6 minutes ago')
+log_lines=$(journalctl --unit doh_proxy.service --output cat --since '6 minutes ago')
 pattern='stat\.c:[0-9]+ ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+) ([0-9]+)$'
 
 # match log lines with pattern (last match will be used)
@@ -60,12 +60,12 @@ if [ -n "${stat[3]}" ] && \
   latency=$((${stat[3]} / ${stat[2]}))
 fi
 
-echo "multigraph https_dns_proxy_count"
+echo "multigraph doh_proxy_count"
 echo "requests.value ${stat[1]:-U}"
 echo "responses.value ${stat[2]:-U}"
-echo "multigraph https_dns_proxy_latency"
+echo "multigraph doh_proxy_latency"
 echo "latency.value ${latency}"
-echo "multigraph https_dns_proxy_connections"
+echo "multigraph doh_proxy_connections"
 echo "opened.value ${stat[6]:-U}"
 echo "closed.value ${stat[7]:-U}"
 echo "reused.value ${stat[8]:-U}"

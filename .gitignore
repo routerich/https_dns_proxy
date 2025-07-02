@@ -18,3 +18,9 @@ output.xml
 report.html
 custom_curl/
 valgrind-*.log
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+Thumbs.db
+.DS_Store

@@ -1,12 +1,12 @@
 *** Settings ***
-Documentation  Simple functional tests for https_dns_proxy
+Documentation  Simple functional tests for doh_proxy
 Library        OperatingSystem
 Library        Process
 Library        Collections
 
 
 *** Variables ***
-${BINARY_PATH}  ${CURDIR}/../../https_dns_proxy
+${BINARY_PATH}  ${CURDIR}/../../doh_proxy
 ${PORT}  55353
 
 
